@@ -1,0 +1,2 @@
+/var/spool/slurmd/job799484/slurm_script: line 14: 324100 Killed                  /home/beq/gtucci/.juliaup/bin/julia simulation_1sp.jl 25 0.8 100.0
+slurmstepd-nariman96: error: Detected 1 oom_kill event in StepId=799484.batch. Some of the step tasks have been OOM Killed.

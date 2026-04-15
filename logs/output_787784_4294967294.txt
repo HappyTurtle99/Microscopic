@@ -1,0 +1,23 @@
+Deff: -9.430195
+5% completed (tau = 5.0000 / 100.0000) | elapsed: 60.89 s
+10% completed (tau = 10.0000 / 100.0000) | elapsed: 125.09 s
+15% completed (tau = 15.0000 / 100.0000) | elapsed: 186.47 s
+20% completed (tau = 20.0000 / 100.0000) | elapsed: 245.60 s
+25% completed (tau = 25.0000 / 100.0000) | elapsed: 307.40 s
+30% completed (tau = 30.0000 / 100.0000) | elapsed: 369.20 s
+35% completed (tau = 35.0000 / 100.0000) | elapsed: 430.45 s
+40% completed (tau = 40.0000 / 100.0000) | elapsed: 488.95 s
+45% completed (tau = 45.0000 / 100.0000) | elapsed: 549.37 s
+50% completed (tau = 50.0000 / 100.0000) | elapsed: 609.32 s
+55% completed (tau = 55.0000 / 100.0000) | elapsed: 670.30 s
+60% completed (tau = 60.0000 / 100.0000) | elapsed: 731.31 s
+65% completed (tau = 65.0000 / 100.0000) | elapsed: 791.48 s
+70% completed (tau = 70.0000 / 100.0000) | elapsed: 852.34 s
+75% completed (tau = 75.0000 / 100.0000) | elapsed: 911.53 s
+80% completed (tau = 80.0000 / 100.0000) | elapsed: 971.80 s
+85% completed (tau = 85.0000 / 100.0000) | elapsed: 1034.02 s
+90% completed (tau = 90.0000 / 100.0000) | elapsed: 1094.82 s
+95% completed (tau = 95.0000 / 100.0000) | elapsed: 1155.21 s
+Number of timesteps completed: 861193474, Nc: 429
+Saved to: /scratch.local/gtucci/micro/julia/l1_15.00_Dn1_0.80_T_100.00_2026-04-10_120557
+Job finished

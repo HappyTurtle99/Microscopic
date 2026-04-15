@@ -1,0 +1,23 @@
+Deff: -9.430195
+5% completed (tau = 0.0500 / 1.0000) | elapsed: 0.63 s
+10% completed (tau = 0.1000 / 1.0000) | elapsed: 1.53 s
+15% completed (tau = 0.1500 / 1.0000) | elapsed: 1.99 s
+20% completed (tau = 0.2000 / 1.0000) | elapsed: 2.45 s
+25% completed (tau = 0.2500 / 1.0000) | elapsed: 2.92 s
+30% completed (tau = 0.3000 / 1.0000) | elapsed: 3.40 s
+35% completed (tau = 0.3500 / 1.0000) | elapsed: 3.88 s
+40% completed (tau = 0.4000 / 1.0000) | elapsed: 4.36 s
+45% completed (tau = 0.4500 / 1.0000) | elapsed: 4.83 s
+50% completed (tau = 0.5000 / 1.0000) | elapsed: 5.30 s
+55% completed (tau = 0.5500 / 1.0000) | elapsed: 5.77 s
+60% completed (tau = 0.6000 / 1.0000) | elapsed: 6.26 s
+65% completed (tau = 0.6500 / 1.0000) | elapsed: 6.74 s
+70% completed (tau = 0.7000 / 1.0000) | elapsed: 7.20 s
+75% completed (tau = 0.7500 / 1.0000) | elapsed: 7.68 s
+80% completed (tau = 0.8000 / 1.0000) | elapsed: 8.15 s
+85% completed (tau = 0.8500 / 1.0000) | elapsed: 8.62 s
+90% completed (tau = 0.9000 / 1.0000) | elapsed: 9.09 s
+95% completed (tau = 0.9500 / 1.0000) | elapsed: 9.57 s
+Number of timesteps completed: 8615428, Nc: 400
+Saved to: /scratch.local/gtucci/micro/lambda1_15.0/Dn1_0.8/T_1.0
+Job finished
