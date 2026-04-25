@@ -6,9 +6,10 @@ using Statistics
 using Printf
 using NPZ
 
-# export Params, RandomDict, SimState,
-#       initialize_state, run_sim!, save_sim,
-#      T0, T1, meso_avg
+export Params, RandomDict, SimState,
+      initialize_state, run_sim!, save_sim,
+     T0, T1, meso_avg, history_array
+     
 # ----------------------------
 # Utilities
 # ----------------------------
@@ -178,15 +179,19 @@ end
 # Initialization
 # ----------------------------
 
-function initialize_field(N::Int, deltarho::Real; rho::Real=1.0, hom::Bool=false, k::Int=1)
+function initialize_field(N::Int; drho::Real=0.0, rho::Real=1.0, hom::Bool=false, k::Int=1)
     occ = Vector{Int}(undef, N)
 
     if hom
         fill!(occ, round(Int, rho))
     else
-        kk = k * (2π) / N
+        kk =  k * (2π) / N
         for i in 1:N
-            occ[i] = floor(Int, rho * (1 + deltarho * real(exp(im * (i - 1) * kk))))
+            if rho != 0
+                occ[i] = floor(Int, rho * (1 + (drho / (rho)) * real(exp(im * (i - 1) * kk))))
+            else
+                occ[i] = 0
+            end
         end
     end
 
@@ -215,10 +220,10 @@ function initialize_chemo_rates(occupancies_n::Vector{Int},
     return rates, cum_rates
 end
 
-function initialize_state(Nsites::Int, rhon1::Int, rhon2::Int, rhoc::Int, μ::Float64)
-    occ1, dict1 = initialize_field(Nsites, 0.0; rho=rhon1)
-    occ2, dict2 = initialize_field(Nsites, 0.0; rho=rhon2)
-    occc, dictc = initialize_field(Nsites, 0.0; rho=rhoc)
+function initialize_state(Nsites::Int, rhon1::Int, rhon2::Int, rhoc::Int, μ::Float64; drho1::Real=0.0, drho2::Real=0.0, drhoc::Real=0.0)
+    occ1, dict1 = initialize_field(Nsites; drho=drho1, rho=rhon1)
+    occ2, dict2 = initialize_field(Nsites; drho=drho2, rho=rhon2)
+    occc, dictc = initialize_field(Nsites; drho=drhoc, rho=rhoc)
 
     rates1, cum1 = initialize_chemo_rates(occ1, occc, μ, true)
     rates2, cum2 = initialize_chemo_rates(occ2, occc, μ, false)
@@ -349,7 +354,7 @@ function get_random_chemo_index(d::RandomDict, cum_chemo_rates::Vector{Float64})
     site = div(idx - 1, 2) + 1
     direction = mod(idx - 1, 2) # 0 left, 1 right
 
-    haskey(d.val_keys, site) || error("chemotactic jump from empty site")
+    haskey(d.val_keys, site) || error("chemotactic jump from empty site $site")
     return site, direction
 end
 
@@ -478,7 +483,7 @@ function run_sim!(st::SimState, par::Params)
 
     if par.save
         save_sim(st, par)
-    end
+    end#
 
     return st
 end

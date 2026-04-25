@@ -424,7 +424,7 @@ def meso_avg(occupancies, w):
         output[i] = average
     return output
 
-def save_sim(avg_run, tau_t, cache, chemo_rates, **kwargs):
+def save_sim(occupancies_t, tau_t, cache, chemo_rates1,chemo_rates2, **kwargs):
 
     output_dir = kwargs['output_dir']
     # Create directory with timestamp
@@ -434,16 +434,23 @@ def save_sim(avg_run, tau_t, cache, chemo_rates, **kwargs):
     os.makedirs(output_dir, exist_ok=True)
 
     # Save files with clean names
-    np.save(os.path.join(output_dir, 'occupancies_t.npy'), avg_run)
+    np.save(os.path.join(output_dir, 'occupancies_t.npy'), occupancies_t)
     np.save(os.path.join(output_dir, 'tau_t.npy'), tau_t)
     np.save(os.path.join(output_dir, 'cache.npy'), cache)
-    np.save(os.path.join(output_dir, 'chemo_rates.npy'), chemo_rates)
+    np.save(os.path.join(output_dir, 'chemo_rates1.npy'), chemo_rates1)
+    np.save(os.path.join(output_dir, 'chemo_rates2.npy'), chemo_rates2)
     
     print(f"Saved to: {output_dir}")
 
-def load_sim(dir):
-    names_in_order = ['occupancies_t.npy', 'tau_t.npy', 'cache.npy', 'chemo_rates.npy']
-    return (np.load(os.path.join(dir, file)) for file in names_in_order)
+
+def load_sim(dir_path):
+    names_in_order = ['occupancies_t.npy', 'tau_t.npy', 'cache.npy', 'chemo_rates1.npy', 'chemo_rates2.npy']
+    
+    return (
+        np.load(os.path.join(dir_path, file)) 
+        for file in names_in_order 
+        if os.path.exists(os.path.join(dir_path, file))
+    )
 
 def plot_results(avg_run, tau_t, w, start, end, Nlines=5):
     # Optional: Ensure Matplotlib uses its built-in TeX parser
