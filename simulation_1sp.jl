@@ -64,7 +64,7 @@ function main()
         gamma1, gamma2, kappa,
         μ, lambda1, lambda2,
         Tfinal,
-        500000,     # save_rate
+        50000000,     # save_rate
         true,       # save
         output_dir
     )
