@@ -17,9 +17,9 @@ mkdir -p logs
 JULIA=/home/beq/gtucci/.juliaup/bin/julia
 
 # Parameter lists
-Nsites_vals=(300)
-Dc_vals=(1.0)
-lambda_vals=(0.4 0.8 1.5 3.0)
+Nsites_vals=(30.0 40.0 50.0 60.0)
+Dc_vals=(0.2 1 2 6)
+lambda_vals=(1.0)
 
 # Get SLURM index
 i=$SLURM_ARRAY_TASK_ID

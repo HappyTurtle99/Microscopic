@@ -9,7 +9,7 @@ function main()
     L = 1.0
     Nsites = 300
     h = L / Nsites
-
+#
     Dn1 = 1.0
     Dn2 = 0.0
     Dc = 1.0

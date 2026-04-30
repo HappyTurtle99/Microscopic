@@ -11,4 +11,4 @@
 cd "$SLURM_SUBMIT_DIR" || exit 1
 mkdir -p logs
 
-/home/beq/gtucci/.juliaup/bin/julia simulation_1sp.jl 25 0.8 100.0
+/home/beq/gtucci/.juliaup/bin/julia simulation_1sp.jl 60.0 6.0 0.00005
