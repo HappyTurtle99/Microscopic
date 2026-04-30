@@ -16,7 +16,7 @@ function main()
     Dn1 = 0.0
     Dn2 = 0.0
     Dc = 0.2
-    gamma1 = 1.0
+    gamma1 = 10.0
     gamma2 = 0.0
     kappa = gamma1
     lambda1 = parse(Float64, ARGS[1])
