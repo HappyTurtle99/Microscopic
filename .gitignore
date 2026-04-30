@@ -3,3 +3,14 @@ __pycache__/helper_functions.cpython-312.pyc
 julia
 julia-1.10.10-mac64.dmg
 julia-1.10.10-macaarch64.dmg
+# Logs
+logs/
+
+# Jupyter checkpoints
+.ipynb_checkpoints/
+
+# Python cache (just in case)
+__pycache__/
+
+# OS junk
+.DS_Store

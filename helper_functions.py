@@ -105,7 +105,7 @@ def p(gamma, m):
 def T0(gamma,mu=1, m=70):
     return sum([f(i * m, mu=mu) * p(gamma, i) for i in range(-m, m + 1)])
 
-def T1(gamma, mu=1, m=70):
+def T1(gamma, mu=10, m=70):
     return sum([i * f(i * m, mu=mu) * p(gamma, i) for i in range(-m, m + 1)])
 
 def get_new_chemo_rates(rates, occupancies_n, occupancies_c, index, mu, attractive):
@@ -416,11 +416,11 @@ def run_sim(occupancies, dicts, chemo_rates, cum_chemo_rates, **kwargs):
     return occupancies_t, tau_t, dicts_out, cache, chemo_rates_out
 
 def meso_avg(occupancies, w):
-    output = np.zeros(occupancies.shape[0])
+    output = np.zeros(occupancies.shape[0], dtype=float)
     for i, _ in enumerate(occupancies):
         indices = [(i - w + j) % occupancies.shape[0] for j in range(2 * w + 1)]
         average = sum([occupancies[index] for index in indices])
-        average = average / len(indices)
+        average = np.mean(occupancies[indices])
         output[i] = average
     return output
 

@@ -6,7 +6,7 @@ using NPZ
 using Dates
 
 function main()
-    length(ARGS) >= 4 || error("Usage: julia simulation_1sp.jl <lambda1> <Dn1> <T>")
+    length(ARGS) >= 5 || error("Usage: julia simulation_1sp.jl <lambda1> <Dn1> <T>")
 
     L = 1.0
     Nsites = parse(Int64, ARGS[4])

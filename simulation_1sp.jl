@@ -4,27 +4,21 @@ using Printf
 using Dates
 
 function main()
-    length(ARGS) >= 3 || error("Usage: julia simulation_1sp.jl <lambda1> <Dn1> <T>")
+    length(ARGS) == 3 || error("Usage: julia simulation_1sp.jl <lambda1> <Dn1> <T>")
 
     L = 1.0
     Nsites = parse(Int64, ARGS[1])
     h = L / Nsites
 
-    Dn1 = 0.1
+    Dn1 = 1.0
     Dn2 = 0.0
     Dc = parse(Float64, ARGS[2])
-    gamma1 = 0.2
+    gamma1 = 30.0
     gamma2 = 0.0
-    kappa = 0.1
+    kappa = 20.0
     lambda1 = parse(Float64, ARGS[3])
     lambda2 = 0.0
-    Tfinal = 0.001
-
-    if lambda1 > 2
-        Tfinal = 5
-    else 
-        Tfinal = 12.5
-    end
+    Tfinal = 0.05
 
     rhon1 = 150
     rhon2 = 0
@@ -43,8 +37,8 @@ function main()
     timestamp = Dates.format(now(), "yyyy-mm-dd_HHMMSS")
 
     output_dir = @sprintf(
-        "/scratch.local/gtucci/micro/julia/l1_%.2f_Dn1_%.2f_T_%.2f_%s",
-        lambda1, Dn1, Tfinal, timestamp
+        "/scratch.local/gtucci/micro/julia/l1_%.2f_Dc_%.2f_Nsites_%.2f_%s",
+        lambda1, Dc, Nsites, timestamp
     )
 
     # output_dir = @sprintf(
