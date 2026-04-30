@@ -16,12 +16,38 @@ export Params, RandomDict, SimState,
 
 @inline periodic_index(i::Int, n::Int) = mod(i - 1, n) + 1
 @inline f(c::Real, μ::Real=1.0) = max(0.0, tanh(μ * c))
-@inline p(γ::Real, m::Integer) = exp(-2γ) * besseli(m, 2γ)
+# @inline p(γ::Real, m::Integer) = besseli_scaled(m, 2γ) # you do not need exp(-2γ) * if you put the argument 2 or in some versions of julia ; scaled=true
+
+function besseli_scaled_asymptotic(ν, z; terms=3)
+    t = 1 / (8z)
+    μ = 4ν^2
+
+    # build series iteratively
+    term = 1.0
+    sum = 1.0
+
+    for k in 1:terms
+        term *= -(μ - (2k - 1)^2) * t / k
+        sum += term
+    end
+
+    return sum / sqrt(2π*z)
+end
+
+function p(γ, m)
+    z = 2.0 * γ
+    if z < 80
+        return exp(-z) * besseli(m, z)
+    else
+        return besseli_scaled_asymptotic(m, z; terms=4)
+    end
+end
+
 
 function T0(γ::Real, μ::Real=1.0; m::Int=70)
     s = 0.0
     for i in -m:m
-        s += f(i * m, μ) * p(γ, i)
+        s += f(i, μ) * p(γ, i)
     end
     return s
 end
@@ -29,7 +55,7 @@ end
 function T1(γ::Real, μ::Real=1.0; m::Int=70)
     s = 0.0
     for i in -m:m
-        s += i * f(i * m, μ) * p(γ, i)
+        s += i * f(i, μ) * p(γ, i)
     end
     return s
 end
@@ -500,7 +526,7 @@ function history_array(st::SimState)
         out[t, :, :] .= st.occ_history[t]
     end
     return out
-end
+end 
 
 function save_sim(st::SimState, par::Params)
     outdir = par.output_dir

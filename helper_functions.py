@@ -102,11 +102,13 @@ def f(c, mu=1):
 def p(gamma, m):
     return np.exp(-2 * gamma) * iv(m, 2 * gamma)
 
+
+# these t's might overflow
 def T0(gamma,mu=1, m=70):
-    return sum([f(i * m, mu=mu) * p(gamma, i) for i in range(-m, m + 1)])
+    return sum([f(i, mu=mu) * p(gamma, i) for i in range(-m, m + 1)])
 
 def T1(gamma, mu=10, m=70):
-    return sum([i * f(i * m, mu=mu) * p(gamma, i) for i in range(-m, m + 1)])
+    return sum([i * f(i, mu=mu) * p(gamma, i) for i in range(-m, m + 1)])
 
 def get_new_chemo_rates(rates, occupancies_n, occupancies_c, index, mu, attractive):
     rates = rates.reshape((rates.shape[0] // 2, 2))
