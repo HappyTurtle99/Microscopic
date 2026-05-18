@@ -444,7 +444,6 @@ def save_sim(occupancies_t, tau_t, cache, chemo_rates1,chemo_rates2, **kwargs):
     
     print(f"Saved to: {output_dir}")
 
-
 def load_sim(dir_path):
     names_in_order = ['occupancies_t.npy', 'tau_t.npy', 'cache.npy', 'chemo_rates1.npy', 'chemo_rates2.npy']
     

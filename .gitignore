@@ -5,6 +5,7 @@ julia-1.10.10-mac64.dmg
 julia-1.10.10-macaarch64.dmg
 # Logs
 logs/
+data/
 
 # Jupyter checkpoints
 .ipynb_checkpoints/

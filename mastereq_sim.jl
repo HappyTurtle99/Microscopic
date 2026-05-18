@@ -6,9 +6,9 @@ using NPZ
 using Dates
 
 function main()
-    length(ARGS) >= 5 || error("Usage: julia simulation_1sp.jl <lambda1> <Dn1> <T>")
+    length(ARGS) <= 4 || error("Usage: julia simulation_1sp.jl <lambda1> <Dn1> <T>")
 
-    L = 1.0
+    L = 50.0
     Nsites = parse(Int64, ARGS[4])
     h = L / Nsites
 
@@ -24,7 +24,7 @@ function main()
     lambda2 = 0.0
     Tfinal = parse(Float64, ARGS[3])
 
-    rhon1 = 320
+    rhon1 = 6
     rhon2 = 0
     rhoc = rhon1
 
