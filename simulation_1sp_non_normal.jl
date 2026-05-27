@@ -7,22 +7,23 @@ function main()
     length(ARGS) == 3 || error("Usage: (here give kappa lambda and T) julia simulation_1sp.jl <lambda1> <Dn1> <T>")
 # 11 1.0 1.0
     L = parse(Float64, ARGS[1])
-    Nsites = Int64(round(200 * L))
+    Nsites = Int64(round(150 * L))
     h = L / Nsites
 #
     Dn1 = parse(Float64, ARGS[2])
     Dn2 = 0.0
     Dc = 1.0
-    kappa = 1.0
+    kappa = 0.0
     gamma1 = 2 * kappa
     gamma2 = 0.0
+    zeta = 10.0
     lambda1 = parse(Float64, ARGS[3])
     lambda2 = 0.0
-    Tfinal = 5
+    Tfinal = 10
 
     rhon2 = 0
     rhoc = 2
-    rhon1 = Int(round(rhoc * kappa / gamma1))
+    rhon1 = 1#Int(round(rhoc * kappa / gamma1))
 
     μ = 10.0
     # μ = 1.0
@@ -41,7 +42,7 @@ function main()
     # )
 
     output_dir = @sprintf(
-        "half_sites_L_%.2f_Dn1_%.2f_lambda_%.2f_%s",
+        "nonnormal_zeta10_L_%.2f_Dn1_%.2f_lambda_%.2f_%s",
         L, Dn1, lambda1, timestamp
     )
 
@@ -54,7 +55,7 @@ function main()
 
     par = Params(
         Dn1, Dn2, Dc,
-        gamma1, gamma2, kappa,
+        gamma1, gamma2, kappa, zeta,
         μ, lambda1, lambda2,
         Tfinal,
         3000000,     # save_rate
@@ -64,7 +65,7 @@ function main()
 
     st = initialize_state(Nsites, rhon1, rhon2, rhoc, μ; drho1=0, drhoc=0)
     run_sim!(st, par)
-    
+
     println("Job finished! Number of sites: ", Nsites, " Time: ", Tfinal)
 end
 

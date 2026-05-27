@@ -686,6 +686,23 @@ function save_sim(st::SimState, par::Params)
     println("Saved to: $outdir")
 end
 
+function save_sim_dir(st::SimState, par::Params, outdir::String)
+    if isdir(outdir)
+        outdir *= "_new"
+    end
+    mkpath(outdir)
+
+    serialize(joinpath(outdir, "Params.bin"), par)
+    serialize(joinpath(outdir, "SimState.bin"), st)
+    npzwrite(joinpath(outdir, "occupancies_t.npy"), history_array(st))
+    npzwrite(joinpath(outdir, "tau_t.npy"), collect(st.tau_history))
+    npzwrite(joinpath(outdir, "cache.npy"), st.cache)
+    npzwrite(joinpath(outdir, "chemo_rates1.npy"), st.chemo_rates1)
+    npzwrite(joinpath(outdir, "chemo_rates2.npy"), st.chemo_rates2)
+
+    println("Saved to: $outdir")
+end
+
 function meso_avg(occupancies::AbstractVector, w::Int)
     n = length(occupancies)
     out = zeros(Float64, n)

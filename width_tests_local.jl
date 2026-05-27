@@ -4,21 +4,21 @@ using Printf
 using Dates
 
 function main()
-    length(ARGS) == 3 || error("Usage: (here give kappa lambda and T) julia simulation_1sp.jl <lambda1> <Dn1> <T>")
-# 11 1.0 1.0
-    L = parse(Float64, ARGS[1])
-    Nsites = Int64(round(200 * L))
+    length(ARGS) == 2 || error("Usage: (here give kappa lambda and T) julia simulation_1sp.jl <Nsites> <T>")
+    L = 1
+    Nsites = 800
     h = L / Nsites
 #
-    Dn1 = parse(Float64, ARGS[2])
+    Dn1 = 1.0
     Dn2 = 0.0
-    Dc = 1.0
+    Dc = parse(Float64, ARGS[1])
     kappa = 1.0
     gamma1 = 2 * kappa
     gamma2 = 0.0
-    lambda1 = parse(Float64, ARGS[3])
+    lambda1 = 5.0
     lambda2 = 0.0
-    Tfinal = 5
+    Tfinal = parse(Float64, ARGS[2])
+    zeta = 0
 
     rhon2 = 0
     rhoc = 2
@@ -36,13 +36,13 @@ function main()
     timestamp = Dates.format(now(), "yyyy-mm-dd_HHMMSS")
 
     # output_dir = @sprintf(
-    #     "/scratch.local/gtucci/micro/julia/l1_%.2f_Dc_%.2f_Nsites_%.2f_%s",
+    #     "/scratch.local03/gtucci/micro/julia/l1_%.2f_Dc_%.2f_Nsites_%.2f_%s",
     #     lambda1, Dc, Nsites, timestamp
     # )
 
     output_dir = @sprintf(
-        "half_sites_L_%.2f_Dn1_%.2f_lambda_%.2f_%s",
-        L, Dn1, lambda1, timestamp
+        "width_test_Nsites_%.2f_T_%.2f_%s",
+        Nsites, Tfinal, timestamp
     )
 
     # rescaling
@@ -55,7 +55,7 @@ function main()
     par = Params(
         Dn1, Dn2, Dc,
         gamma1, gamma2, kappa,
-        μ, lambda1, lambda2,
+        μ, lambda1, lambda2, zeta,
         Tfinal,
         3000000,     # save_rate
         true,       # save
@@ -64,7 +64,7 @@ function main()
 
     st = initialize_state(Nsites, rhon1, rhon2, rhoc, μ; drho1=0, drhoc=0)
     run_sim!(st, par)
-    
+
     println("Job finished! Number of sites: ", Nsites, " Time: ", Tfinal)
 end
 
