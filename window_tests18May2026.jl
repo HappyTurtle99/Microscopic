@@ -34,15 +34,15 @@ function main()
 
     timestamp = Dates.format(now(), "yyyy-mm-dd_HHMMSS")
 
-    # output_dir = @sprintf(
-    #     "/scratch.local03/gtucci/micro/julia/l1_%.2f_Dc_%.2f_Nsites_%.2f_%s",
-    #     lambda1, Dc, Nsites, timestamp
-    # )
-
     output_dir = @sprintf(
-        "window_test_L_18.85_Nsites_%.2f_T_%.2f_%s",
+        "/scratch03.local/gtucci/micro/julia/window_t_L_18.85_Nsites_%.2f_Tfinal_%.2f_%s",
         Nsites, Tfinal, timestamp
     )
+
+   # output_dir = @sprintf(
+    #    "window_test_L_18.85_Nsites_%.2f_T_%.2f_%s",
+     #   Nsites, Tfinal, timestamp
+    #)
 
     # rescaling
     Dn1 /= h^2

@@ -34,4 +34,4 @@ echo "Running job $i with:"
 echo "Nsites=$Nsites T=$Dc"
 
 # Run simulation (adjust argument order if needed)
-$JULIA --project=. window_tests18May2026.jl $Nsites $Dc
+$JULIA window_tests18May2026.jl $Nsites $Dc
