@@ -452,7 +452,6 @@ def load_sim(dir_path):
         for file in names_in_order 
         if os.path.exists(os.path.join(dir_path, file))
     )
-
 def plot_results(avg_run, tau_t, w, start, end, Nlines=5):
     # Optional: Ensure Matplotlib uses its built-in TeX parser
     plt.rcParams.update({
@@ -462,6 +461,7 @@ def plot_results(avg_run, tau_t, w, start, end, Nlines=5):
 
     # mesoscopic average (width 2 * w)
     run = avg_run[int(start * avg_run.shape[0]):int(end * avg_run.shape[0]), :, :]
+
     Nlines = min(run.shape[0], Nlines)
     colors = plt.cm.viridis(np.linspace(0, 1, Nlines))
 
@@ -532,3 +532,39 @@ def plot_results(avg_run, tau_t, w, start, end, Nlines=5):
     plt.legend(loc="center left", bbox_to_anchor=(1, 0.5))
     plt.title('chemical')
     plt.show()
+
+#returns width in units of number of sites. works for single-peaked profile
+def width_fourier(rho):
+    _, L = rho.shape
+
+    rho_centered = np.empty_like(rho)
+
+    for i in range(rho.shape[0]):
+        peak = np.argmax(rho[i])
+        shift = L // 2 - peak
+        rho_centered[i] = np.roll(rho[i], shift)
+
+    rho = rho_centered
+
+    # remove DC mode per run (crucial)
+    rho_fluct = rho - rho.mean(axis=1, keepdims=True)
+
+    rhok = np.fft.fft(rho_fluct, axis=1)
+
+    #structure factor
+    Sk = np.mean(np.abs(rhok)**2, axis=0) / L**2
+    
+    Sk_norm = Sk / np.max(Sk) # normalize
+
+    above = np.where(Sk_norm >= 0.5)[0]
+    left_idx = above[0]
+    right_idx = above[-1]
+
+    ks = 2 * np.pi * np.fft.fftfreq(L)
+    k_left = ks[left_idx]
+    k_right = ks[right_idx]
+
+    # full width at half maximum
+    fwhm = np.abs(k_right - k_left)
+    width = 2 * np.pi / fwhm
+    return width

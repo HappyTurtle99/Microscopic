@@ -31,7 +31,7 @@ Nsites=${Nsites_vals[$n_idx]}
 Dc=${Dc_vals[$d_idx]}
 
 echo "Running job $i with:"
-echo "Nsites=$Nsites T=$Dc"
+echo "Dc=$Nsites T=$Dc"
 
 # Run simulation (adjust argument order if needed)
 $JULIA continue_sim.jl $Nsites $Dc

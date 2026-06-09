@@ -9,7 +9,7 @@ using NPZ
 
 export Params, RandomDict, SimState,
       initialize_state, run_sim!, save_sim,
-     T0, T1, meso_avg, history_array
+     T0, T1, meso_avg, history_array, save_sim_dir
      
 # ----------------------------
 # Utilities

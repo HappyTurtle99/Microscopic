@@ -11,4 +11,4 @@
 cd "$SLURM_SUBMIT_DIR" || exit 1
 mkdir -p logs
 
-/home/beq/gtucci/.juliaup/bin/julia continue_sim.jl
+/home/beq/gtucci/.juliaup/bin/julia continue_sim301.jl
