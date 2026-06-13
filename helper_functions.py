@@ -6,6 +6,7 @@ from scipy.special import iv
 import numpy as np
 import time
 import datetime
+from scipy.ndimage import uniform_filter1d
 
 class RandomDict:
     def __init__(self):
@@ -418,13 +419,11 @@ def run_sim(occupancies, dicts, chemo_rates, cum_chemo_rates, **kwargs):
     return occupancies_t, tau_t, dicts_out, cache, chemo_rates_out
 
 def meso_avg(occupancies, w):
-    output = np.zeros(occupancies.shape[0], dtype=float)
-    for i, _ in enumerate(occupancies):
-        indices = [(i - w + j) % occupancies.shape[0] for j in range(2 * w + 1)]
-        average = sum([occupancies[index] for index in indices])
-        average = np.mean(occupancies[indices])
-        output[i] = average
-    return output
+    return uniform_filter1d(
+        occupancies.astype(float),
+        size=2*w+1,
+        mode='wrap'
+    )
 
 def save_sim(occupancies_t, tau_t, cache, chemo_rates1,chemo_rates2, **kwargs):
 

@@ -325,7 +325,7 @@ end
 # Initialization
 # ----------------------------
 
-function initialize_field(N::Int; drho::Real=0.0, rho::Real=1.0, hom::Bool=false, k::Int=1)
+function initialize_field_legacy(N::Int; drho::Real=0.0, rho::Real=1.0, hom::Bool=false, k::Int=1)
     occ = Vector{Int}(undef, N)
 
     if hom
@@ -335,6 +335,34 @@ function initialize_field(N::Int; drho::Real=0.0, rho::Real=1.0, hom::Bool=false
         for i in 1:N
             if rho != 0
                 occ[i] = floor(Int, rho * (1 + (drho / (rho)) * real(exp(im * (i - 1) * kk))))
+            else
+                occ[i] = 0
+            end
+        end
+    end
+
+    d = RandomDict()
+    p_index = 0
+    for i in eachindex(occ)
+        for _ in 1:occ[i]
+            insert!(d, p_index, i)
+            p_index += 1
+        end
+    end
+
+    return occ, d
+end
+
+function initialize_field(N::Int; drho::Real=0.0, rho::Real=1.0, hom::Bool=false, k::Int=1)
+    occ = Vector{Int}(undef, N)
+
+    if hom
+        fill!(occ, round(Int, rho))
+    else
+        kk =  k * (2π) / N
+        for i in 1:N
+            if rho != 0
+                occ[i] = floor(Int, rho) * floor(Int, (1 + (drho / (rho)) * real(exp(im * (i - 1 + N / 2) * kk))))
             else
                 occ[i] = 0
             end

@@ -16,7 +16,6 @@ function main()
     
     println("running now")
     
-
     run_sim!(st, par)
     dir_local = @sprintf("cluster_data/05jun/%.2f/%.2f", par.Dc / par.Dn1, par.kappa)
     save_sim_dir(st, par, dir_local)
