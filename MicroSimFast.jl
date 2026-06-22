@@ -16,7 +16,8 @@ export Params, RandomDict, SimState,
 # ----------------------------
 
 @inline periodic_index(i::Int, n::Int) = mod(i - 1, n) + 1
-@inline f(c::Real, μ::Real=1.0) = max(0.0, tanh(μ * c))
+@inline fprime(c::Real, μ::Real=1.0) = max(0.0, tanh(μ * c))
+@inline f(c::Real, μ::Real=1.0) = max(0.0, μ * c)
 
 function besseli_scaled_asymptotic(ν, z; terms=3)
     t = 1 / (8z)
@@ -325,7 +326,7 @@ end
 # Initialization
 # ----------------------------
 
-function initialize_field_legacy(N::Int; drho::Real=0.0, rho::Real=1.0, hom::Bool=false, k::Int=1)
+function initialize_field(N::Int; drho::Real=0.0, rho::Real=1.0, hom::Bool=false, k::Int=1)
     occ = Vector{Int}(undef, N)
 
     if hom
@@ -334,7 +335,7 @@ function initialize_field_legacy(N::Int; drho::Real=0.0, rho::Real=1.0, hom::Boo
         kk =  k * (2π) / N
         for i in 1:N
             if rho != 0
-                occ[i] = floor(Int, rho * (1 + (drho / (rho)) * real(exp(im * (i - 1) * kk))))
+                occ[i] = rho * round( (1 + (drho / (rho)) * real(exp(im * (i - 1) * kk))))
             else
                 occ[i] = 0
             end
@@ -353,7 +354,7 @@ function initialize_field_legacy(N::Int; drho::Real=0.0, rho::Real=1.0, hom::Boo
     return occ, d
 end
 
-function initialize_field(N::Int; drho::Real=0.0, rho::Real=1.0, hom::Bool=false, k::Int=1)
+function initialize_field_hump(N::Int; drho::Real=0.0, rho::Real=1.0, hom::Bool=false, k::Int=1)
     occ = Vector{Int}(undef, N)
 
     if hom
@@ -366,6 +367,35 @@ function initialize_field(N::Int; drho::Real=0.0, rho::Real=1.0, hom::Bool=false
             else
                 occ[i] = 0
             end
+        end
+    end
+
+    d = RandomDict()
+    p_index = 0
+    for i in eachindex(occ)
+        for _ in 1:occ[i]
+            insert!(d, p_index, i)
+            p_index += 1
+        end
+    end
+
+    return occ, d
+end
+
+#gaussian
+function initialize_field_gaussian(N::Int; drho::Real=0.0, rho::Real=1.0, hom::Bool=false, k::Int=1)
+    occ = Vector{Int}(undef, N)
+
+    width = 0.35
+    rho = rho / width
+
+    b = N * width / sqrt(π)
+
+    for i in 1:N
+        if rho != 0
+            occ[i] = round(Int, rho * exp(-((i - N / 2) / b) ^ 2))
+        else
+            occ[i] = 0
         end
     end
 
