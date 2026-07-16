@@ -17,7 +17,7 @@ function main()
     gamma2 = 0.0
     lambda1 = 1.0
     lambda2 = 0.0
-    Tfinal = 1.0
+    Tfinal = 50.0
     zeta = 0
 
     dummy = 7000 * parse(Float64, ARGS[2]) / 200
@@ -43,15 +43,15 @@ function main()
 
     timestamp = Dates.format(now(), "yyyy-mm-dd_HHMMSS")
 
-    # output_dir = @sprintf(
-    #     "/scratch03.local/gtucci/micro/julia/%.2f_sites_L_35.0Dc%.2fkappa%.2f_%s",
-    #     Nsites, Dc, kappa, timestamp
-    #  )
+    output_dir = @sprintf(
+        "/scratch03.local/gtucci/micro/julia/%.2f_sites_L_35.0Dc%.2fkappa%.2f_lambda%.2f_%s",
+        Nsites, Dc, kappa,lambda1, timestamp,
+     )
 
-   output_dir = @sprintf(
-      "window_test_L_12.56Nsites%.2fT%.2f_%s",
-      Nsites, Tfinal, timestamp
-   )
+#    output_dir = @sprintf(
+#       "window_test_L_12.56Nsites%.2fT%.2f_%s",
+#       Nsites, Tfinal, timestamp
+#    )
 
     # rescaling
     Dn1 /= h^2
@@ -70,7 +70,7 @@ function main()
         output_dir
     )
 
-    st = initialize_state(round(Int, Nsites), rhon1, rhon2, rhoc, μ; drho1=rhon1, drhoc=rhoc)
+    st = initialize_state(round(Int, Nsites), rhon1, rhon2, rhoc, μ; drho1=0, drhoc=0)
     println(sum(st.occc))
     println(sum(st.occ1))
     run_sim!(st, par)

@@ -15,9 +15,9 @@ function main()
     kappa = 0.025
     gamma1 = 2 * kappa
     gamma2 = 0.0
-    lambda1 = 1.0
+    lambda1 = 0.1
     lambda2 = 0.0
-    Tfinal = 1.0
+    Tfinal = 400.0
     zeta = 0
     dummy = parse(Float64, ARGS[2])
     dummy += 1
@@ -26,26 +26,31 @@ function main()
     rhoc = 2
     rhon1 = Int(round(rhoc * kappa / gamma1))
 
+
     μ = 10.0
     # μ = 1.0
     # μ = Dn1 * kappa / (lambda1 * gamma1)
 
+    total_rate = (Dn1 * rhon1 + Dc * rhoc + μ * rhoc * rhon1 * lambda1) * Nsites
+
     Deff = Dn1 - lambda1 * (T1(rhoc, μ) - T0(rhoc, μ))
     @printf("Deff: %.6f\n", Deff)
+    @printf("Total rate: %.6f\n", total_rate)
+
     ν = lambda1 * T1(rhoc, μ) / (Deff + lambda1 * T1(rhoc, μ))
     @printf("nu: %.6f\n", ν)
 
     timestamp = Dates.format(now(), "yyyy-mm-dd_HHMMSS")
 
-    output_dir = @sprintf(
-        "/scratch03.local/gtucci/micro/julia/L_12.56_Dc_%.2f_kappa_%.2f_%s",
-        Dc, kappa, timestamp
-    )
+    # output_dir = @sprintf(
+    #     "/scratch03.local/gtucci/micro/julia/L_12.56_Dc_%.2f_kappa_%.2f_%s",
+    #     Dc, kappa, timestamp
+    # )
 
-#    output_dir = @sprintf(
-#        "window_test_L_12.56_Nsites_%.2f_T_%.2f_%s",
-#        Nsites, Tfinal, timestamp
-#     )
+   output_dir = @sprintf(
+       "window_test_L_12.56_Nsites_%.2f_T_%.2f_%s",
+       Nsites, Tfinal, timestamp
+    )
 
     # rescaling
     Dn1 /= h^2
@@ -66,10 +71,10 @@ function main()
 
     st = initialize_state(Nsites, rhon1, rhon2, rhoc, μ; drho1=rhon1, drhoc=rhoc)
     run_sim!(st, par)
-    dir_local = @sprintf(
-        "cluster_data/03jun/Dc%.2f/kappa%.2f/",
-        par.Dc/par.Dn1, par.kappa)
-    save_sim_dir(st, par, dir_local)
+    # dir_local = @sprintf(
+    #     "cluster_data/03jun/Dc%.2f/kappa%.2f/",
+    #     par.Dc/par.Dn1, par.kappa)
+    # save_sim_dir(st, par, dir_local)
 
     println("Job finished! Number of sites: ", Nsites, " Time: ", Tfinal)
 end

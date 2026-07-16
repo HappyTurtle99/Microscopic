@@ -44,6 +44,12 @@ function p(γ, m)
     end
 end
 
+# Gennaro:
+# T1(x) = mu x = 2
+# T0(x) = abs(mu)x(p(x,0) + p(x, 1)) = 0.77150
+
+# -0.22 = 1 - (2-0.77150)
+
 function T0(γ::Real, μ::Real=1.0; m::Int=70)
     s = 0.0
     for i in -m:m
@@ -326,7 +332,7 @@ end
 # Initialization
 # ----------------------------
 
-function initialize_field(N::Int; drho::Real=0.0, rho::Real=1.0, hom::Bool=false, k::Int=1)
+function initialize_field(N::Int; drho::Real=0.0, rho::Real=1.0, hom::Bool=true, k::Int=1)
     occ = Vector{Int}(undef, N)
 
     if hom

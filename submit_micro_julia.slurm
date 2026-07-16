@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=micro
+#SBATCH --job-name=micro_hom
 #SBATCH --output=logs/output_%A_%a.txt
 #SBATCH --error=logs/error_%A_%a.txt
 #SBATCH --partition=rostam
@@ -11,4 +11,4 @@
 cd "$SLURM_SUBMIT_DIR" || exit 1
 mkdir -p logs
 
-/home/beq/gtucci/.juliaup/bin/julia continue_sim301.jl
+/home/beq/gtucci/.juliaup/bin/julia rough_shape18jun_hom.jl 150 0
