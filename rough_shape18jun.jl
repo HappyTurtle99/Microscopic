@@ -17,7 +17,7 @@ function main()
     gamma2 = 0.0
     lambda1 = 1.0
     lambda2 = 0.0
-    Tfinal = 1.0
+    Tfinal = 50.0
     zeta = 0
 
     dummy = 7000 * parse(Float64, ARGS[2]) / 200

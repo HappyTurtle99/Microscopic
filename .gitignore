@@ -6,7 +6,13 @@ julia-1.10.10-macaarch64.dmg
 # Logs
 logs/
 data/
+cluster_data/
 
+.ipynb_checkpoints/submit_micro_julia-checkpoint.slurm
+__pycache__/helper_functions.cpython-313.pyc
+
+
+window_test_L_12.56_Nsites_10000.00_T_0.00_2026-06-22_110126/
 # Jupyter checkpoints
 .ipynb_checkpoints/
 

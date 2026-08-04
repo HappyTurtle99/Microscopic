@@ -5,26 +5,18 @@ using Dates
 using Serialization
 
 function main()
-    path = "/scratch03.local/gtucci/micro/julia/L_12.56_Dc_3.00_kappa_0.10_2026-06-03_162317"
+    path = "/scratch.local/gtucci/micro/julia/homogenous_7000.00_sites_L_35.0Dc3.00kappa0.12_lambda5.00_2026-07-30_222801"
 
     par_old = deserialize(joinpath(path, "Params.bin"))
     st = deserialize(joinpath(path, "SimState.bin"))
     
-    Tfinal = st.tau +3.0
-
-    multiplier = parse(Float64, ARGS[1])
-    dummy = parse(Float64, ARGS[2])
-    dummy = dummy + 1
-    if par_old.Dc / par_old.Dn1 == multiplier
-        println("previous Dc = 10, nvm!")
-        multiplier += 5.0
-    end
+    Tfinal = 0.001
     
-    output_dir = "/scratch03.local/gtucci/micro/julia/window_t_L_12.56_Nsites_3000.00_Tfinal_150.00_35_continued_Dc_10_2026-05-19_155535"
+    output_dir = "/scratch.local/gtucci/micro/julia/homogenous_7000.00_sites_L_35.0Dc3.00kappa0.12_lambda5.00_2026-07-30_222801_extra_time_test"
     # output_dir = par_old.output_dir
-    
+
     par = Params(
-        par_old.Dn1, par_old.Dn2, par_old.Dn1 * multiplier,
+        par_old.Dn1, par_old.Dn2, par_old.Dc,
         par_old.gamma1, par_old.gamma2, par_old.kappa,
         par_old.μ, par_old.lambda1, par_old.lambda2,
         Tfinal,
@@ -33,23 +25,9 @@ function main()
         output_dir
     )
 
-    println(par.Dc / par.Dn1)
-
-    # rhoc = sum(st.occc) / length(st.occc)
-    # Deff = par.Dn1 - par.lambda1 * (T1(rhoc, par.μ) - T0(rhoc, par.μ))
-    println("running now")
-    # @printf("Deff: %.6f\n", Deff)
-    # @printf("par.lambda1: %.6f\n", par.lambda1)
-    # @printf("par.rhoc: %.6f\n", rhoc)
-
-    #ν = par.lambda1 * T1(rhoc, par.μ) / (Deff + par.lambda1 * T1(rhoc, par.μ))
-    #@printf("nu: %.6f\n", ν)
+    println("Copy 1: running for extra 100 time: /scratch.local/gtucci/micro/julia/homogenous_7000.00_sites_L_35.0Dc3.00kappa0.12_lambda5.00_2026-07-30_222801")
 
     run_sim!(st, par)
-    dir_local = @sprintf(
-        "cluster_data/01jun/%.2f/",
-        par.Dc/par.Dn1)
-    save_sim_dir(st, par, dir_local)
 
     println("Job finished! Number of sites: ", length(st.occc), " Time: ", Tfinal)
 end

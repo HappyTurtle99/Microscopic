@@ -15,12 +15,12 @@ function main()
     kappa = 0.125
     gamma1 = 2 * kappa
     gamma2 = 0.0
-    lambda1 = 1.0
+    lambda1 = parse(Float64, ARGS[2])
     lambda2 = 0.0
-    Tfinal = 50.0
+    Tfinal = parse(Float64, ARGS[3])
     zeta = 0
 
-    dummy = 7000 * parse(Float64, ARGS[2]) / 200
+    # dummy = 7000 * parse(Float64, ARGS[2]) / 200
 
     rhon2 = 0
     rhoc = 2
@@ -43,8 +43,15 @@ function main()
 
     timestamp = Dates.format(now(), "yyyy-mm-dd_HHMMSS")
 
+    #on rostam
+    #output_dir = @sprintf(
+    #    "/scratch03.local/gtucci/micro/julia/homogenous_%.2f_sites_L_35.0Dc%.2fkappa%.2f_lambda%.2f_%s",
+    #    Nsites, Dc, kappa,lambda1, timestamp,
+    # )
+:q
+    #on nariman
     output_dir = @sprintf(
-        "/scratch03.local/gtucci/micro/julia/%.2f_sites_L_35.0Dc%.2fkappa%.2f_lambda%.2f_%s",
+        "/scratch.local/gtucci/micro/julia/homogenous_%.2f_sites_L_35.0Dc%.2fkappa%.2f_lambda%.2f_%s",
         Nsites, Dc, kappa,lambda1, timestamp,
      )
 
@@ -65,7 +72,7 @@ function main()
         gamma1, gamma2, kappa,
         μ, lambda1, lambda2,
         Tfinal,
-        30000000,     # save_rate
+        3000000000,     # save_rate
         true,       # save
         output_dir
     )
