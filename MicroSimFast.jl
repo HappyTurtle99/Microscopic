@@ -624,6 +624,8 @@ function timestep!(st::SimState, par::Params)
     r2 = rand()
     dtau = log(1 / r1) / total_rate
 
+    println(dtau)
+
     if r2 <= par.Dn1 * st.N1 / total_rate
         p_index, index = get_random(st.dict1)
         _, i0, i1 = diff!(st.occ1, st.dict1, p_index)
@@ -687,6 +689,7 @@ function snapshot(st::SimState)
 end
 
 function run_sim!(st::SimState, par::Params)
+    
     start_time = time()
     next_progress = 0.05
 

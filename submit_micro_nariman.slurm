@@ -11,8 +11,8 @@
 cd "$SLURM_SUBMIT_DIR" || exit 1
 mkdir -p logs
 
-echo "copy 2: lambda 5 Tfinal 75"
+export JULIA_SCRATCH_DIR="$HOME/.julia/scratch"
+export JULIA_DEPOT_PATH="$HOME/.julia"
 
-/home/beq/gtucci/.juliaup/bin/julia 
-# continue_sim.jl
-rough_shape18jun_hom.jl 200 5.0 0.001
+# Run the script using the Microscopic project directory
+julia --project=/home/beq/gtucci/Work/DiscreteChemo/DiscreteChemo/Microscopic /home/beq/gtucci/Work/DiscreteChemo/DiscreteChemo/Microscopic/rough_shape18jun_nariman.jl 100 5.0 0.000001

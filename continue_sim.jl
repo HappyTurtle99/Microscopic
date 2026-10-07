@@ -5,29 +5,29 @@ using Dates
 using Serialization
 
 function main()
-    path = "/scratch.local/gtucci/micro/julia/homogenous_7000.00_sites_L_35.0Dc3.00kappa0.12_lambda5.00_2026-07-30_222801"
-
-    par_old = deserialize(joinpath(path, "Params.bin"))
+    path = "/scratch03.local/gtucci/micro/julia/homogenous_5950.00_sites_L_35.0Dc3.00kappa0.12_lambda5.00_2026-09-24_145947"
+    
+    par = deserialize(joinpath(path, "Params.bin"))
     st = deserialize(joinpath(path, "SimState.bin"))
-    
-    Tfinal = 0.001
-    
-    output_dir = "/scratch.local/gtucci/micro/julia/homogenous_7000.00_sites_L_35.0Dc3.00kappa0.12_lambda5.00_2026-07-30_222801_extra_time_test"
-    # output_dir = par_old.output_dir
 
-    par = Params(
-        par_old.Dn1, par_old.Dn2, par_old.Dc,
-        par_old.gamma1, par_old.gamma2, par_old.kappa,
-        par_old.μ, par_old.lambda1, par_old.lambda2,
-        Tfinal,
-        par_old.save_rate,
-        par_old.save,
-        output_dir
+    println(st.tau)
+    Tfinal = st.tau + 0.15
+
+    output_dir = "$(path)_Tfinal$(Tfinal)"
+
+    par_new = Params(
+        par.Dn1, par.Dn2, par.Dc,
+        par.gamma1, par.gamma2, par.kappa,
+        par.μ, par.lambda1, par.lambda2,
+        Tfinal, # 
+        par.save_rate,
+        par.save,
+        output_dir # (changed)
     )
 
-    println("Copy 1: running for extra 100 time: /scratch.local/gtucci/micro/julia/homogenous_7000.00_sites_L_35.0Dc3.00kappa0.12_lambda5.00_2026-07-30_222801")
+    println(output_dir)
 
-    run_sim!(st, par)
+    run_sim!(st, par_new)
 
     println("Job finished! Number of sites: ", length(st.occc), " Time: ", Tfinal)
 end

@@ -6,12 +6,12 @@ using Dates
 function main()
     # length(ARGS) == 2 || error("Usage: (here give kappa lambda and T) julia simulation_1sp.jl <Nsites> <T>")
     L = 35.00
-    Nsites = 7000 * parse(Float64, ARGS[1]) / 200 # 100 150 200 250 
+    Nsites = 7000 * parse(Float64, ARGS[1]) / 200 # 100 150 200 250
     h = L / Nsites
 
     Dn1 = 1.0
     Dn2 = 0.0
-    Dc = 3.0 
+    Dc = 3.0
     kappa = 0.125
     gamma1 = 2 * kappa
     gamma2 = 0.0
@@ -45,20 +45,20 @@ function main()
 
     #on rostam
     #output_dir = @sprintf(
-    #    "/scratch03.local/gtucci/micro/julia/homogenous_%.2f_sites_L_35.0Dc%.2fkappa%.2f_lambda%.2f_%s",
-    #    Nsites, Dc, kappa,lambda1, timestamp,
-    # )
-:q
+        # "/scratch03.local/gtucci/micro/julia/homogenous_%.2f_sites_L_35.0Dc%.2fkappa%.2f_lambda%.2f_%s",
+        #Nsites, Dc, kappa,lambda1, timestamp,
+     #)
+    
     #on nariman
     output_dir = @sprintf(
-        "/scratch.local/gtucci/micro/julia/homogenous_%.2f_sites_L_35.0Dc%.2fkappa%.2f_lambda%.2f_%s",
+"/scratch.local/gtucci/micro/julia/homogenous_%.2f_sites_L_35.0Dc%.2fkappa%.2f_lambda%.2f_%s",
         Nsites, Dc, kappa,lambda1, timestamp,
      )
 
-#    output_dir = @sprintf(
-#       "window_test_L_12.56Nsites%.2fT%.2f_%s",
-#       Nsites, Tfinal, timestamp
-#    )
+    #output_dir = @sprintf(
+      # "window_test_L_12.56Nsites%.2fT%.2f_%s",
+     # Nsites, Tfinal, timestamp
+    #)
 
     # rescaling
     Dn1 /= h^2
